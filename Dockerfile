@@ -98,11 +98,6 @@ RUN cd /usr/local/bin && wget -q -O asg-creator \
     "$(curl -s https://api.github.com/repos/cloudfoundry-incubator/asg-creator/releases/latest \
     |jq --raw-output '.assets[] | .browser_download_url' | grep linux | grep -v zip)" && chmod +x asg-creator
 
-# Install cf-mgmt
-RUN cd /usr/local/bin && wget -q -O cf-mgmt \
-    "$(curl -s https://api.github.com/repos/pivotalservices/cf-mgmt/releases/latest \
-    |jq --raw-output '.assets[] | .browser_download_url' | grep linux | grep -v zip)" && chmod +x cf-mgmt
-
 # Install genesis
 RUN curl "https://raw.githubusercontent.com/starkandwayne/genesis/master/bin/genesis" > /usr/bin/genesis \
     && chmod 0755 /usr/bin/genesis
