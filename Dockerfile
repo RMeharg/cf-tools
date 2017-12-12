@@ -44,7 +44,7 @@ RUN apt-get update && sudo apt-get -y --no-install-recommends install google-clo
 RUN pip3 install awscli
 
 # Install Azure CLI 
-RUN npm install -g azure-cli
+# RUN npm install -g azure-cli
 
 # Install CF CLI
 RUN curl -L \
