@@ -111,9 +111,6 @@ RUN cd /usr/local/bin && \
 RUN mkdir -p .bucc && git clone https://github.com/starkandwayne/bucc.git && \
     ln -s $HOME/.bucc/bucc/bin/bucc /usr/local/bin/bucc
 
-ADD add_go.sh /usr/local/bin
-ADD add_extras.sh /usr/local/bin
-
 # Install Go
 RUN wget -q -O - "https://storage.googleapis.com/golang/go${GOVERSION}.linux-amd64.tar.gz" \
     | sudo tar -C /usr/local -zx
