@@ -2,23 +2,13 @@ FROM ubuntu:16.04
 MAINTAINER Ryan Meharg <ryan.meharg@altoros.com>
 
 # Setup
-ENV HOME /home/ops
-ENV CFPLUGINS /opt/cf-plugins
-ENV GOPATH /opt/go
-ENV GOBIN /opt/go/bin
-ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/bin:/usr/local/go/bin:$GOBIN:$OMGBIN
 ENV GOVERSION 1.8.1
+ENV GOPATH $HOME/go
+ENV GOBIN $HOME/go/bin
+ENV PATH /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:$HOME/bin:/usr/local/go/bin:$GOBIN
 
-RUN mkdir -p $HOME
-RUN mkdir -p $HOME/bin
-RUN mkdir -p $CFPLUGINS
+RUN mkdir -p ~/bin
 RUN mkdir -p $GOBIN
-RUN groupadd -g 9024 ops
-RUN useradd --shell /bin/bash -u 9024 -g 9024 -o -c "" -M -d $HOME ops
-RUN chown -R ops:ops $HOME
-
-VOLUME $HOME
-WORKDIR $HOME
 
 # Install common packages
 RUN cat /etc/apt/sources.list | sed 's/archive/us.archive/g' > /tmp/s && mv /tmp/s /etc/apt/sources.list
@@ -136,9 +126,7 @@ RUN sudo apt-get update && sudo apt-get -y --no-install-recommends install glide
 #    |jq --raw-output '.assets[] | .browser_download_url')" && chmod +x cfops
 
 # Cleanup
-RUN chown -R ops:ops /opt $HOME $GOBIN $GOPATH
 RUN apt-get -y autoremove && apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /var/log/*
-RUN echo "ops ALL=NOPASSWD: ALL" >> /etc/sudoers
-USER ops
+
 CMD ["/bin/bash"]
